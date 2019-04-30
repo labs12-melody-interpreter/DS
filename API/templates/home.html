@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Music Interpolator
+            <style>
+                * {
+                    font-size:30px;
+                }
+            </style>
+        </title>
+    </head>
+    <body>
+        <input id="note-input" type="text"/>
+        <button id="note-button">Submit Note</button>
+        <p id="greeting"></p>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $("#note-button").click(function(event){
+                let message = {
+                    note: $("#note-input").val()
+                }
+                $.post("/", JSON.stringify(message), function(response){
+                    $("#greeting").text(response.greeting);
+                    console.log(response)
+                })
+            })
+        </script>
+    </body>
+</html>
