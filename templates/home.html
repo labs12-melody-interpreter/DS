@@ -11,7 +11,7 @@
     </head>
     <body>
         <form action="/generator/" method ="post">
-            <input id="note-input" type="text" name = 'note' value = "{{request.form.note}}"/>
+            <input id="note-input" type="text" name = 'note' value = "note"/>
             <button id="note-button">Submit Note</button>
             <select id = "Artists" name='Artists' >
                 <option value = "Bach">Bach</option>
@@ -21,14 +21,14 @@
 
             <div class = "container">
                 <div class="Bach">
-                    <select class="second-level-select" id = "style" name = 'style' value = 'style'>
+                    <select class="second-level-select" id = "style" name = 'style' >
                         <option value = "TODO1">TODO1</option>
                         <option value = "TODO2">TODO2</option>
                         <option value = "TODO3">TODO3</option>
                     </select>
                 </div>
                 <div class = "Chopin">
-                    <select class="second-level-select" id = "style" name = 'style' value = 'style'> 
+                    <select class="second-level-select" id = "style" name = 'style'> 
                         <option value = "and">and</option>
                         <option value = "bal">bal</option>
                         <option value = "bar">bar</option>

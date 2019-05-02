@@ -53,7 +53,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
 
 def create_network(network_input, n_vocab):
     """ create the structure of the neural network """
-     model = Sequential()
+    model = Sequential()
     model.add(LSTM(
         512,
         input_shape=(network_input.shape[1], network_input.shape[2]),
@@ -69,7 +69,7 @@ def create_network(network_input, n_vocab):
     model.add(Activation('softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
     # Load the weights to each node
-    model.load_weights('weights/weights_Chopin_and.hdf5')
+    model.load_weights('weights/weights_Chopin_and.hdf5') ## CHANGE WEIGHT TODO
 
     return model
 
