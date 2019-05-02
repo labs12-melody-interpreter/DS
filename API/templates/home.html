@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Music Interpolator
+            <style>
+                * {
+                    font-size:30px;
+                }
+            </style>
+        </title>
+    </head>
+    <body>
+        <form action="/generator/" method ="post">
+            <input id="note-input" type="text" value = "{{request.form.username}}"/>
+            <button id="note-button">Submit Note</button>
+            <select id = "myList" name='artist'>
+                <option value = "Bach">Bach</option>
+                <option value = "Chopin">Chopin</option>
+                <option value = "Mozart">Mozart</option>
+            </select>
+            <div class = "container">
+                <div class="Bach">
+                    <select id="style">
+                        <option value = "">TODO</option>
+                    </select>
+                </div>
+            </div>
+            <div class = "container">
+                <div class="Chopin">
+                    <select id = "style"></select>
+                </div>
+            </div>
+        </form>
+        <p id="greeting"></p>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+             $("#note-button").click(function(event){
+                let message = {
+                    note: $("#note-input").val()
+                }
+                $.post("/", JSON.stringify(message), function(response){
+                    $("#greeting").text(response.greeting);
+                    console.log(response)
+                })
+            })
+
+            $(document).ready(function () {
+                $('#Rank').bind('change', function () {
+                    var elements = $('div.container').children().hide(); // hide all the elements
+                    var value = $(this).val();
+
+                    if (value.length) { // if somethings' selected
+                        elements.filter('.' + value).show(); // show the ones we want
+                    }
+    }).trigger('change'); // Setup the initial states
+});
+        </script>
+    </body>
+</html>
