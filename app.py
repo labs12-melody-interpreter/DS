@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for, flash, redirect, send_file
 import glob
 import pickle
 import numpy as np
@@ -12,8 +12,10 @@ from keras.layers import Activation
 from keras.utils import np_utils
 from keras.callbacks import ModelCheckpoint
 from lstm import train_network, get_notes
+from predict import generate
+import os
 
-
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -46,12 +48,13 @@ def home():
 @app.route('/generator/', methods = ['POST'])
 def music_generator():
     attempted_note = request.form['note']
-    attempted_artist = str(request.values['Artists'])
+    attempted_artist = request.values['Artists']
     attempted_style = request.form['style']
     
     notes = get_notes(attempted_artist, 'and')
+    generate(notes, Note = attempted_note)
 
-    return ''.join(notes)
+    return send_file('test_output.mid', mimetype='audio/midi')
 
 if __name__ == "__main__":
     app.run(debug=True)

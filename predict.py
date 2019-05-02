@@ -4,7 +4,7 @@
 ## Credit to Skuldur on Github
 
 import pickle
-import numpy
+import numpy as np
 from music21 import instrument, note, stream, chord
 from keras.models import Sequential
 from keras.layers import Dense
@@ -12,11 +12,11 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-def generate():
+def generate(notes, Note):
     """ Generate a piano midi file """
     #load the notes used to train the model
-    with open('data/notes', 'rb') as filepath:
-        notes = pickle.load(filepath)
+   # with open('notes', 'rb') as filepath:
+    #    notes = pickle.load(filepath)
 
     # Get all pitch names
     pitchnames = sorted(set(item for item in notes))
@@ -25,7 +25,7 @@ def generate():
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
     model = create_network(normalized_input, n_vocab)
-    prediction_output = generate_notes(model, network_input, pitchnames, n_vocab)
+    prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
     create_midi(prediction_output)
 
 def prepare_sequences(notes, pitchnames, n_vocab):
@@ -45,7 +45,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
     n_patterns = len(network_input)
 
     # reshape the input into a format compatible with LSTM layers
-    normalized_input = numpy.reshape(network_input, (n_patterns, sequence_length, 1))
+    normalized_input = np.reshape(network_input, (n_patterns, sequence_length, 1))
     # normalize input
     normalized_input = normalized_input / float(n_vocab)
 
@@ -62,7 +62,7 @@ def create_network(network_input, n_vocab):
     model.add(Dropout(0.3))
     model.add(LSTM(512, return_sequences=True))
     model.add(Dropout(0.3))
-    model.add(LSTM(512))
+    model.add(LSTM(256))
     model.add(Dense(256))
     model.add(Dropout(0.3))
     model.add(Dense(n_vocab))
@@ -70,28 +70,32 @@ def create_network(network_input, n_vocab):
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 
     # Load the weights to each node
-    model.load_weights('weights.hdf5')
+    model.load_weights('weights/weights_Chopin_and.hdf5')
 
     return model
 
-def generate_notes(model, network_input, pitchnames, n_vocab):
+def generate_notes(model, network_input, pitchnames, n_vocab, Note):
     """ Generate notes from the neural network based on a sequence of notes """
     # pick a random sequence from the input as a starting point for the prediction
-    start = numpy.random.randint(0, len(network_input)-1)
+    start = np.random.randint(0, len(network_input)-1)
+
+    note_to_int = dict((note, number) for number, note in enumerate(pitchnames))
 
     int_to_note = dict((number, note) for number, note in enumerate(pitchnames))
+
+    start = note_to_int[Note]
 
     pattern = network_input[start]
     prediction_output = []
 
     # generate 500 notes
     for note_index in range(500):
-        prediction_input = numpy.reshape(pattern, (1, len(pattern), 1))
+        prediction_input = np.reshape(pattern, (1, len(pattern), 1))
         prediction_input = prediction_input / float(n_vocab)
 
         prediction = model.predict(prediction_input, verbose=0)
 
-        index = numpy.argmax(prediction)
+        index = np.argmax(prediction)
         result = int_to_note[index]
         prediction_output.append(result)
 
