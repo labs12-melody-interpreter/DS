@@ -20,12 +20,12 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 
-
+'''
 def get_model():
     global model
     model = load_model ('.h5')
     print(" * Model loaded!")
-
+'''
 
 
 
