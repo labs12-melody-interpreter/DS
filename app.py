@@ -49,11 +49,13 @@ def home():
 def music_generator():
     attempted_note = request.form['note']
     attempted_artist = request.values['Artists']
-    attempted_style = request.form['style']
+    attempted_style = request.values['style']
     
-    notes = get_notes(attempted_artist, 'and')
-    generate(notes, Note = attempted_note)
+    #notes = get_notes(attempted_artist, attempted_style)
+    #generate(notes, Note = attempted_note)
 
+    #print(attempted_note, attempted_artist, attempted_style)
+    #return attempted_note, attempted_artist, attempted_style
     return send_file('test_output.mid', mimetype='audio/midi')
 
 if __name__ == "__main__":
