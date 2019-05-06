@@ -12,7 +12,7 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-def generate(notes, Note):
+def generate(notes, Note, artist, style):
     """ Generate a piano midi file """
     #load the notes used to train the model
    # with open('notes', 'rb') as filepath:
@@ -24,7 +24,7 @@ def generate(notes, Note):
     n_vocab = len(set(notes))
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
-    model = create_network(normalized_input, n_vocab)
+    model = create_network(normalized_input, n_vocab, artist, style)
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
     create_midi(prediction_output)
 
@@ -51,7 +51,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
 
     return (network_input, normalized_input)
 
-def create_network(network_input, n_vocab):
+def create_network(network_input, n_vocab, artist, style):
     """ create the structure of the neural network """
     model = Sequential()
     model.add(LSTM(
@@ -69,7 +69,7 @@ def create_network(network_input, n_vocab):
     model.add(Activation('softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
     # Load the weights to each node
-    model.load_weights('weights/weights_Chopin_and.hdf5') ## CHANGE WEIGHT TODO
+    model.load_weights('weights/{}_{}_weights.h5'.format(artist, style)) 
 
     return model
 
