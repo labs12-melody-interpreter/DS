@@ -22,7 +22,7 @@ import io
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://elegant-knuth-1dc044.netlify.com/"]}})
+CORS(app, resources={r"/generator/": {"origins": ["http://localhost:3000", "https://elegant-knuth-1dc044.netlify.com/"]}})
 
 
 app.config["DEBUG"] = True
@@ -43,7 +43,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/generator/', methods = ['POST'])
-#@cross_origin()
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def music_generator():
     
     K.clear_session()
