@@ -22,7 +22,7 @@ import io
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}, expose_headers=["x-suggested-filename", "content-disposition"])
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 app.config["DEBUG"] = True
@@ -45,7 +45,7 @@ def home():
 @app.route('/generator/', methods = ['POST'])
 #@cross_origin()
 def music_generator():
-    '''
+    
     K.clear_session()
 
     attempted_note = request.json['note']
@@ -58,7 +58,7 @@ def music_generator():
     generate(notes, attempted_note, attempted_artist, attempted_style)
 
     K.clear_session()
-    '''
+    
     #print(attempted_note, attempted_artist, attempted_style)
     #return attempted_note
     
