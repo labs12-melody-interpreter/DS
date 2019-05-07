@@ -22,7 +22,7 @@ import io
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
-CORS(app, support_credentials=True, send_wildcard = True, resources={r"/*": {"origins": ["http://localhost:3000", "https://elegant-knuth-1dc044.netlify.com/"]}})
+CORS(app, resources={r"*": {"origins": ["http://localhost:3000", "https://elegant-knuth-1dc044.netlify.com/"]}})
 
 
 app.config["DEBUG"] = True
