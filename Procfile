@@ -1,1 +1,1 @@
-web: gunicorn music-interpolator:APP
+web: gunicorn app:app
