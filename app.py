@@ -20,6 +20,7 @@ from midiutil import MIDIFile
 import io
 from rq import Queue, Connection
 import redis
+from decouple import config
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
