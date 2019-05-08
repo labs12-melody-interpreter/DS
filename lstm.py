@@ -28,11 +28,11 @@ def train_network(Artists, style):
 
     train(model, network_input, network_output)
 
-def get_notes(Artists, style):
+def get_notes(artist, style):
     """ Get all the notes and chords from the midi files in the ./midi_songs directory """
     notes = []
-
-    for file in glob.glob("midi/{}/{}/*.mid".format(Artists, style)):
+    '''
+    for file in glob.glob("midi/{}/{}/*.mid".format(artist, style)):
         midi = converter.parse(file)
 
         print("Parsing %s" % file)
@@ -53,6 +53,10 @@ def get_notes(Artists, style):
 
     with open('data/notes', 'wb') as filepath:
         pickle.dump(notes, filepath)
+    '''
+    pickle_in = open("notes/{}_{}_notes.pickle".format(artist, style),"rb")
+    notes = pickle.load(pickle_in)
+
 
     return notes
 
