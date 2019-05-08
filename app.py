@@ -20,7 +20,6 @@ from midiutil import MIDIFile
 import io
 from rq import Queue
 from worker import CONN
-from utils import count
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
