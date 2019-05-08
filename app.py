@@ -44,7 +44,7 @@ def home():
 @app.route('/generator/', methods = ['POST', 'OPTIONS'])
 @cross_origin(origin='*')
 def music_generator():
-    '''
+    
     K.clear_session()
 
     attempted_note = request.json['note']
@@ -60,7 +60,7 @@ def music_generator():
     
     #print(attempted_note, attempted_artist, attempted_style)
     #return attempted_note
-    '''
+    
   
     return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
 
