@@ -18,14 +18,16 @@ import os
 from flask_cors import CORS, cross_origin
 from midiutil import MIDIFile
 import io
-from rq import Queue
-from worker import CONN
+from rq import Queue, connection
+import redis
+from worker import conn
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
 CORS(app, resources=r"*")
 
-q = Queue(connection=CONN)
+redis_url = config('REDIS_URL')
+q = Queue('high', connection=redis.from_url(redis_url))
 
 
 app.config["DEBUG"] = True
