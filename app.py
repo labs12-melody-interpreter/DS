@@ -57,11 +57,11 @@ def music_generator():
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
-    generate(notes, attempted_note, attempted_artist, attempted_style)
+    #generate(notes, attempted_note, attempted_artist, attempted_style)
 
     redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
     q = Queue('high', connection=redis.from_url(redis_url))
-    result = q.enqueque(generate, notes, attempted_note, attempted_artist, attempted_style)
+    result = q.enqueue(generate, notes, attempted_note, attempted_artist, attempted_style)
 
     K.clear_session()
     
