@@ -17,10 +17,7 @@ from predict import generate
 import os
 from flask_cors import CORS, cross_origin
 from midiutil import MIDIFile
-import io
-from rq import Queue, Connection
-import redis
-from decouple import config
+
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
@@ -57,11 +54,7 @@ def music_generator():
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
-    #generate(notes, attempted_note, attempted_artist, attempted_style)
-
-    redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-    q = Queue('high', connection=redis.from_url(redis_url))
-    result = q.enqueue(generate, notes, attempted_note, attempted_artist, attempted_style)
+    generate(notes, attempted_note, attempted_artist, attempted_style)
 
     K.clear_session()
     
