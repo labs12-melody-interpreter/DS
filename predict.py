@@ -88,7 +88,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
     prediction_output = []
 
     # generate 500 notes
-    for note_index in range(50):
+    for note_index in range(100):
         prediction_input = np.reshape(pattern, (1, len(pattern), 1))
         prediction_input = prediction_input / float(n_vocab)
 
