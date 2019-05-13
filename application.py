@@ -43,11 +43,12 @@ def music_generator():
     attempted_note = request.json['note']
     attempted_artist = request.json['artist']
     attempted_style = request.json['style']
-    
+    attempted_model = request.json['model']
+
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
-    generate(notes, attempted_note, attempted_artist, attempted_style)
+    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
 
     K.clear_session()
     
