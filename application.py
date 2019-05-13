@@ -28,13 +28,6 @@ CORS(application, resources=r"*")
 application.config["DEBUG"] = True
 
 
-'''
-def get_model():
-    global model
-    model = load_model ('.h5')
-    print(" * Model loaded!")
-'''
-
 
 @application.route('/', methods=['GET',"POST"])
 def home():
