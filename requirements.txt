@@ -5,7 +5,7 @@ Jinja2==2.10.1
 Keras==2.2.4
 Keras-Applications==1.0.6
 Keras-Preprocessing==1.0.5
-MIDIUtil==1.2.1
+//MIDIUtil==1.2.1
 music21==5.5.0
 numpy==1.16.2
 numpydoc==0.8.0
