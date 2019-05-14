@@ -103,7 +103,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
 
     return prediction_output
 
-def create_midi(prediction_output, artist, style, note, model):
+def create_midi(prediction_output, artist, style, Note, model):
     """ convert the output from the prediction to notes and create a midi file
         from the notes """
     offset = 0
@@ -134,4 +134,4 @@ def create_midi(prediction_output, artist, style, note, model):
 
     midi_stream = stream.Stream(output_notes)
 
-    midi_stream.write('midi', fp='{}_{}_{}_{}.mid'.format(artist, style, note, model))
+    midi_stream.write('midi', fp='{}_{}_{}_{}.mid'.format(artist, style, Note, model))
