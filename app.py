@@ -27,7 +27,9 @@ def home():
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
+    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
 
+    
     return render_template('home.html')
 
 @app.route('/generator/', methods = ['POST', 'OPTIONS'])
@@ -43,7 +45,7 @@ def music_generator():
 
     notes = get_notes(attempted_artist, attempted_style)
     '''
-    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
+    #generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
     
     #print(attempted_note, attempted_artist, attempted_style)
     #return attempted_note
