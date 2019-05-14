@@ -46,9 +46,10 @@ def music_generator():
     def generate():
         yield "<br/"
         yield bread_and_butter(attempted_note, attempted_artist, attempted_style, attempted_model)
+        yield "<br/"
         return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
   
-    return Response(generate(), mimetype = 'audio/midi')
+    return generate()
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
