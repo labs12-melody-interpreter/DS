@@ -12,8 +12,9 @@ from keras.layers import LSTM
 from keras.layers import Activation
 from keras.utils import np_utils
 from keras.callbacks import ModelCheckpoint
-from keras import backend as K
 '''
+from keras import backend as K
+
 from lstm import train_network, get_notes
 from predict import generate
 import os
