@@ -99,7 +99,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
         prediction_output.append(result)
 
         pattern.append(index)
-        pattern = pattern[0:len(pattern)]
+        pattern = pattern[1:len(pattern)]
 
     return prediction_output
 
