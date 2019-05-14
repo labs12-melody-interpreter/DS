@@ -3,8 +3,9 @@ import glob
 import pickle
 import numpy as np
 import json
-from music21 import converter, instrument, note, chord, stream
 '''
+from music21 import converter, instrument, note, chord, stream
+
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
