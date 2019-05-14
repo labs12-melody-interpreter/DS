@@ -32,11 +32,9 @@ def music_generator():
     attempted_artist = attempted_artist.lower()
   
     notes = get_notes(attempted_artist, attempted_style)
-    yield "<br/>"
     generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
-    yield "<br/>"
-        #print(attempted_note, attempted_artist, attempted_style)
-        #return attempted_not
+    #print(attempted_note, attempted_artist, attempted_style)
+    #return attempted_not
         
     
     return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
