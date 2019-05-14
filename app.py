@@ -30,16 +30,16 @@ def music_generator():
     attempted_model = request.json['model']
 
     attempted_artist = attempted_artist.lower()
-    def gen():
-        notes = get_notes(attempted_artist, attempted_style)
-        yield "<br/>"
-        generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
-        yield "<br/>"
+  
+    notes = get_notes(attempted_artist, attempted_style)
+    yield "<br/>"
+    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
+    yield "<br/>"
         #print(attempted_note, attempted_artist, attempted_style)
         #return attempted_not
         
-        yield send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
-    return Response(gen(), mimetype='audio/midi')
+    
+    return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
