@@ -3,7 +3,6 @@ import pickle
 import numpy as np
 import json
 from keras import backend as K
-
 from lstm import train_network, get_notes
 from predict import generate
 import os
@@ -15,10 +14,7 @@ CORS(app, resources=r"*")
 
 app.config["DEBUG"] = True
 
-
-
-@app.route('/', methods=['GET',"POST"])
-def home():
+def bread_and_butter():
     attempted_note = request.json['note']
     attempted_artist = request.json['artist']
     attempted_style = request.json['style']
@@ -27,8 +23,12 @@ def home():
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
+    
     generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
 
+
+@app.route('/', methods=['GET',"POST"])
+def home():
     
     return render_template('home.html')
 
@@ -44,14 +44,17 @@ def music_generator():
     attempted_artist = attempted_artist.lower()
 
     notes = get_notes(attempted_artist, attempted_style)
-    '''
-    #generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
     
+    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
+    '''
     #print(attempted_note, attempted_artist, attempted_style)
     #return attempted_note
-    
+    def generate():
+        yield "<br/"
+        yield bread_and_butter()
+        return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
   
-    return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
+    return Response(generate(), mimetype = 'audio/midi')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
