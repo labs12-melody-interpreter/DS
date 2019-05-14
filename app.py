@@ -39,7 +39,7 @@ def music_generator():
         #return attempted_not
         
         yield send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
-    return Response(gen(), mimetype='audio/midi')
+    return gen()
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
