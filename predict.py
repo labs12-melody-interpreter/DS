@@ -12,7 +12,7 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-def generate(notes, Note, artist, style):
+def generate(notes, Note, artist, style, model):
     """ Generate a piano midi file """
     #load the notes used to train the model
    # with open('notes', 'rb') as filepath:
@@ -24,9 +24,9 @@ def generate(notes, Note, artist, style):
     n_vocab = len(set(notes))
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
-    model = create_network(normalized_input, n_vocab, artist, style)
+    model = create_network(normalized_input, n_vocab, artist, style, model)
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
-    create_midi(prediction_output)
+    create_midi(prediction_output, artist, style, Note, model)
 
 def prepare_sequences(notes, pitchnames, n_vocab):
     """ Prepare the sequences used by the Neural Network """
@@ -51,7 +51,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
 
     return (network_input, normalized_input)
 
-def create_network(network_input, n_vocab, artist, style):
+def create_network(network_input, n_vocab, artist, style, mod):
     """ create the structure of the neural network """
     model = Sequential()
     model.add(LSTM(
@@ -69,7 +69,7 @@ def create_network(network_input, n_vocab, artist, style):
     model.add(Activation('softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
     # Load the weights to each node
-    model.load_weights('weights/{}_{}_weights.h5'.format(artist, style)) 
+    model.load_weights('weights_{}/{}_{}_weights.h5'.format(mod, artist, style)) 
 
     return model
 
@@ -88,7 +88,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
     prediction_output = []
 
     # generate 500 notes
-    for note_index in range(100):
+    for note_index in range(150):
         prediction_input = np.reshape(pattern, (1, len(pattern), 1))
         prediction_input = prediction_input / float(n_vocab)
 
@@ -99,11 +99,11 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
         prediction_output.append(result)
 
         pattern.append(index)
-        pattern = pattern[1:len(pattern)]
+        pattern = pattern[0:len(pattern)]
 
     return prediction_output
 
-def create_midi(prediction_output):
+def create_midi(prediction_output, artist, style, Note, model):
     """ convert the output from the prediction to notes and create a midi file
         from the notes """
     offset = 0
