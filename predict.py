@@ -24,7 +24,7 @@ def generate(notes, Note, artist, style, model):
     n_vocab = len(set(notes))
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
-    model = create_network(normalized_input, n_vocab, artist, style)
+    model = create_network(normalized_input, n_vocab, artist, style, model)
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
     create_midi(prediction_output, artist, style, Note, model)
 
@@ -51,7 +51,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
 
     return (network_input, normalized_input)
 
-def create_network(network_input, n_vocab, artist, style):
+def create_network(network_input, n_vocab, artist, style, model):
     """ create the structure of the neural network """
     model = Sequential()
     model.add(LSTM(
