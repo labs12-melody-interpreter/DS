@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import json
 from music21 import converter, instrument, note, chord, stream
+'''
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -12,6 +13,7 @@ from keras.layers import Activation
 from keras.utils import np_utils
 from keras.callbacks import ModelCheckpoint
 from keras import backend as K
+'''
 from lstm import train_network, get_notes
 from predict import generate
 import os
@@ -22,6 +24,10 @@ from midiutil import MIDIFile
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
 CORS(app, resources=r"*")
+
+#ignore tf error
+tf.logging.set_verbosity(tf.logging.ERROR)
+
 
 
 
