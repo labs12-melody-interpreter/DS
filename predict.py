@@ -134,4 +134,4 @@ def create_midi(prediction_output, artist, style, Note, model):
 
     midi_stream = stream.Stream(output_notes)
 
-    midi_stream.write('midi', fp='{}_{}_{}_{}.mid'.format(artist, style, Note, model))
+    midi_stream.write('midi', fp='test_output.mid')
