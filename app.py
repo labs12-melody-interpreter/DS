@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, url_for, flash, redirect, send_file, Response
-import glob
 import pickle
 import numpy as np
 import json
@@ -20,8 +19,6 @@ from lstm import train_network, get_notes
 from predict import generate
 import os
 from flask_cors import CORS, cross_origin
-from midiutil import MIDIFile
-
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
