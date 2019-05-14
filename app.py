@@ -25,8 +25,6 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 app = Flask(__name__)
 CORS(app, resources=r"*")
 
-#ignore tf error
-tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 
