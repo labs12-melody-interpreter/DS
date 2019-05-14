@@ -14,14 +14,8 @@ CORS(app, resources=r"*")
 
 app.config["DEBUG"] = True
 
-def bread_and_butter():
-    attempted_note = request.json['note']
-    attempted_artist = request.json['artist']
-    attempted_style = request.json['style']
-    attempted_model = request.json['model']
-
-    attempted_artist = attempted_artist.lower()
-
+def bread_and_butter(attempted_note, attempted_artist, attempted_style, attempted_model):
+    
     notes = get_notes(attempted_artist, attempted_style)
     
     generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
@@ -35,14 +29,14 @@ def home():
 @app.route('/generator/', methods = ['POST', 'OPTIONS'])
 @cross_origin(origin='*')
 def music_generator():
-    '''
+    
     attempted_note = request.json['note']
     attempted_artist = request.json['artist']
     attempted_style = request.json['style']
     attempted_model = request.json['model']
 
     attempted_artist = attempted_artist.lower()
-
+    '''
     notes = get_notes(attempted_artist, attempted_style)
     
     generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
@@ -51,7 +45,7 @@ def music_generator():
     #return attempted_note
     def generate():
         yield "<br/"
-        yield bread_and_butter()
+        yield bread_and_butter(attempted_note, attempted_artist, attempted_style, attempted_model)
         return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
   
     return Response(generate(), mimetype = 'audio/midi')
