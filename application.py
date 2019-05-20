@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, url_for, flash, redirect, sen
 import pickle
 import numpy as np
 import json
-from keras import backend as K
 from lstm import train_network, get_notes
 from predict import generate
 import os
@@ -34,9 +33,6 @@ def music_generator():
   
     notes = get_notes(attempted_artist, attempted_style)
     generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
-    #print(attempted_note, attempted_artist, attempted_style)
-    #return attempted_not
-        
     
     return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
 
