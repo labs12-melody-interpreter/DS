@@ -69,7 +69,7 @@ def create_network(network_input, n_vocab, artist, style, mod):
     model.add(Activation('softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
     # Load the weights to each node
-    model.load_weights('weights_{}/{}_{}_weights.h5'.format(mod, artist, style)) 
+    model.load_weights('weights/{}_{}_{}_weights.h5'.format(artist, style, mod)) 
 
     return model
 
