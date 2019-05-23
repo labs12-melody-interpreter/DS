@@ -24,7 +24,6 @@ def home():
 @cross_origin(origin='*')
 def music_generator():
     
-    attempted_note = request.json['note']
     attempted_artist = request.json['artist']
     attempted_style = request.json['style']
     attempted_model = request.json['model']
@@ -32,7 +31,7 @@ def music_generator():
     attempted_artist = attempted_artist.lower()
   
     notes = get_notes(attempted_artist, attempted_style)
-    generate(notes, attempted_note, attempted_artist, attempted_style, attempted_model)
+    generate(notes, attempted_artist, attempted_style, attempted_model)
     
     return send_file('test_output.mid', mimetype='audio/midi', as_attachment=True)
 

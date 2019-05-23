@@ -12,7 +12,7 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-def generate(notes, Note, artist, style, mod):
+def generate(notes, artist, style, mod):
     """ Generate a piano midi file """
     #load the notes used to train the model
    # with open('notes', 'rb') as filepath:
@@ -25,8 +25,8 @@ def generate(notes, Note, artist, style, mod):
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
     model = create_network(normalized_input, n_vocab, artist, style, mod)
-    prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
-    create_midi(prediction_output, artist, style, Note, model)
+    prediction_output = generate_notes(model, network_input, pitchnames, n_vocab)
+    create_midi(prediction_output, artist, style, model)
 
 def prepare_sequences(notes, pitchnames, n_vocab):
     """ Prepare the sequences used by the Neural Network """
@@ -73,16 +73,13 @@ def create_network(network_input, n_vocab, artist, style, mod):
 
     return model
 
-def generate_notes(model, network_input, pitchnames, n_vocab, Note):
+def generate_notes(model, network_input, pitchnames, n_vocab):
     """ Generate notes from the neural network based on a sequence of notes """
     # pick a random sequence from the input as a starting point for the prediction
     start = np.random.randint(0, len(network_input)-1)
 
-    note_to_int = dict((note, number) for number, note in enumerate(pitchnames))
-
     int_to_note = dict((number, note) for number, note in enumerate(pitchnames))
 
-    start = note_to_int[Note]
 
     pattern = network_input[start]
     prediction_output = []
@@ -103,7 +100,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab, Note):
 
     return prediction_output
 
-def create_midi(prediction_output, artist, style, Note, model):
+def create_midi(prediction_output, artist, style, model):
     """ convert the output from the prediction to notes and create a midi file
         from the notes """
     offset = 0
