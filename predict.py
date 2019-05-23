@@ -12,7 +12,7 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-def generate(notes, Note, artist, style, model):
+def generate(notes, Note, artist, style, mod):
     """ Generate a piano midi file """
     #load the notes used to train the model
    # with open('notes', 'rb') as filepath:
@@ -24,7 +24,7 @@ def generate(notes, Note, artist, style, model):
     n_vocab = len(set(notes))
 
     network_input, normalized_input = prepare_sequences(notes, pitchnames, n_vocab)
-    model = create_network(normalized_input, n_vocab, artist, style, model)
+    model = create_network(normalized_input, n_vocab, artist, style, mod)
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, Note)
     create_midi(prediction_output, artist, style, Note, model)
 
