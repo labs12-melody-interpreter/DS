@@ -11,6 +11,8 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
+from keras import backend as K 
+
 
 def generate(notes, artist, style, mod):
     """ Generate a piano midi file """
@@ -27,6 +29,7 @@ def generate(notes, artist, style, mod):
     model = create_network(normalized_input, n_vocab, artist, style, mod)
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab)
     create_midi(prediction_output, artist, style, model)
+    K.clear_session()
 
 def prepare_sequences(notes, pitchnames, n_vocab):
     """ Prepare the sequences used by the Neural Network """
