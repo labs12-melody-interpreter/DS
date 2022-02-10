@@ -9,7 +9,7 @@ music21==5.5.0
 numpy==1.16.2
 numpydoc==0.8.0
 tensorboard==1.13.1
-tensorflow==1.13.1
+tensorflow==2.5.3
 tensorflow-estimator==1.13.0
 tensorflow-hub==0.4.0
 redis==3.2.1
